@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form action="/exweb/cal.do" method="post">
+		<label for = "ina">계산 : </label><input type="text" name="x" placeholder="x값을 입력하세요">
+		
+		<select name="op">
+	    <option value="">연산자 선택</option>
+	    <option value="plu">+</option>	<!-- +,-는 사용자 눈에 보이는거  // 인식하는건 value > 속성이 중요 -->
+	    <option value="min">-</option>
+	    <option value="mul">*</option>
+	    <option value="div">/</option>
+		</select>
+	
+		<input type="text" name="y" placeholder="y값을 입력하세요">
+		<input type="submit" value ="=" />
+		
+	</form>
+</body>
+</html>

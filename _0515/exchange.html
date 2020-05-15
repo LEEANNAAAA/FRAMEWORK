@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<a href="http://localhost:8000/exweb/exchange.do?dollar=1">1달러</a>
+	</div>
+	<form action = "http://localhost:8000/exweb/exchange.do" method="get">
+	<label for="ina">달러 : </label><input type="text" name="dollar" id="ina" value="1">		<!-- 기본값 설정하려면 value이용 -->
+	<input type="submit" value="원화" />  	<!-- '제출'글자 바꾸려면 value이용 -->
+	</form>
+</body>
+</html>

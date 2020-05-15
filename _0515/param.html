@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>파라미터 테스트</title>
+</head>
+<body>
+	<h1>파라미터를 포함한 요청을 보내는 방법</h1>
+	<h2>1.웹 브라우저의 주소창에 주소와 파라미터를 직접 입력(GET방식요청)</h2>	 <!-- 방식변경 불가 GET -->
+	<div>http://서버컴퓨터
+		주소:포트번호/요청파일경로?파라미터이름=파라미터값&파라미터이름=파라미터값&파라미터이름=파라미터값</div>
+	<h2>2.링크를 클릭하여 href 속성의 주소로 요청 전송(GET방식요청)</h2>
+	<div>
+		<a href="http://localhost:8000/exweb/hello.do?a=포로리&b=너부리">HelloServlet 실행 링크</a>		<!-- 절대경로라서 복잡 -->
+		<a href="/exweb/hello.do?a=포로리&b=너부리">HelloServlet 실행 링크</a>		<!-- http://localhost:8000/exweb/param.html 동일한건 삭제해도 ok -->
+		<a href="hello.do?a=포로리&b=너부리">HelloServlet 실행 링크</a>		<!-- 폴더도 생략 ok, hello앞에 /까지 생략 -->
+		<!-- 그러나 항상 파라미터 값 고정되어있어 효율적이지는 않다 -->
+	</div>
+	
+	<h2>3.form 내부의 submit 버튼을 클릭하여 action 속성의 주소로 요청 전송</h2>		<!-- 파라미터 값 수시로 변경 가능 -->
+	<div>다양한 요청방식(==HTTP메서드 ==HTTP커맨드) 존재 : GET, POST, PUT, DELETE, etc</div>
+	<div>form 엘리먼트의 method 속성으로 요청방식 지정 가능</div>
+	<h3>GET방식 요청 폼</h3> 	<!-- 폼은 형식 변환 가능 / get은 대용량 보낼 수 없음 -->
+	<form action="http://localhost:8000/exweb/hello.do" method="get">		<!-- 주소 세 개중에 아무거나 상관없음, but 파라미터 값 제외 / method는 이미 get이기 때문에 생략가능 -->
+		<label for="ina">a:</label> <input type="text" name="a" id="ina"  placeholder="a를 입력하세요"/>		<!-- 입력받을 값 > text상자, 여기에 입력 값이 파라미터 a로 연결 -->
+		b: <input type="text" name="b" /> <input type="submit" />
+		<!-- a:, b: 제일 무식한 방법 -->
+		<!-- name='a' 뒤에 placeholder="a를 입력하세요" 방법도 가능-->
+		<!-- label 이 제일 좋은 방법 -->
+	</form>
+	<h3>POST 방식 요청 폼</h3> 	<!-- 주소에 파라미터 값이 뜨지 않음 > http://localhost:8000/exweb/hello.do // pwd(보안이 필요한)의 경우 post방식 필요-->
+	<div>파라미터가 주소뒤에 붙어서 전송되지 않고, 
+	요청메시지 본문에 포함되어 전송되므로, 브라우저 주소표시줄에 나타나지 않는다. <br>파라미트 값의 용량(글자수)제한이 없다. 
+	<br>단점 : 오류가 날 경우 바로 확인할 수 없으므로 F12로 직접 디버깅해가며 확인 > network > head > form data</div>
+	<form action="http://localhost:8000/exweb/hello.do" method="post">		
+		<label for="ina">a:</label> <input type="text" name="a" id="ina" />
+		b: <input type="text" name="b" /> <input type="submit" />
+		
+	</form>
+	<hr />
+	<div>
+		1.웹브라우저 주소창에
+		http://localhost:8000/exweb/login.do?id=a001&pw=1234
+		를 입력하고 요청을 보내면 로그인 성공이라고 출력되고,
+		ID 파라미터 값이 "a001"이 아니면, 존재하지 않는 ID입니다."라고 출력
+		ID 파라미터 값이 "a001"이고 pw 파라미터 값이 "1234"아니면, "로그인 실패"라고 출력되도록 서블릿을 작성
+		
+		2.
+		로그인 성공 링크를 클릭하면, "로그인 성공"이 출력되고,
+		로그인 실패 링크를 클릭하면, "로그인 실패"이 출력되도록,
+		링크를 작성
+		3.
+		아이디와 비밀번호를 입력받아서 POST 방식으로 전송하는 폼을 작성		
+	</div>
+	<div>
+		
+		1.웹브라우저 주소창에
+		http://localhost:8000/exweb/exchange.do?dollar=1
+		를 입력하고 요청을 보내면 "1달러=1216.90원"이라고 출력되도록 
+		ExchangeServlet.java 서블릿 작성
+		
+		2.
+		"1달러"링크를 클릭하면,
+		http://localhost:8000/exweb/exchange.do?dollar=1
+		주소로 요청을 전송하고,
+		화면에 "1달러=1216.90원"이라고 출력되도록 링크를 작성
+		3.
+		달러 금액을 입력받아서 GET 방식으로 전송하는 폼을 작성
+	</div>
+		<div>
+		
+		1.웹브라우저 주소창에
+		http://localhost:8000/exweb/cal.do?x=6&y=2&op=plu
+		를 입력하고 요쳥을 보내면"6+2=8"이라고 출력되도록
+		CalcServlet.java 서블릿 작성
+		op=min 라고 입력한 경우, "6-2=4"이라고 출력
+		op=mul 라고 입력한 경우, "6*2=12"이라고 출력
+		op=div 라고 입력한 경우, "6/2=3"이라고 출력
+		
+		2.
+		x,y,op 값을 입력받아서 POST 방식으로 전송하는 폼을 작성
+		op 값은 select 엘리먼트를 사용하여 입력
+		
+	</div>
+</body>
+</html>

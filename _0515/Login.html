@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action ="http://localhost:8000/exweb/login.do" method="post">
+		<label for="ina">ID:</label><input type="text" name="id" id = "ina" placeholder="ID를 입력하세요" />
+		<label for="ina">PW:</label><input type="text" name="pw" id = "ina" placeholder="비밀번호를 입력하세요" />
+		<input type="submit" />
+	</form>
+	<div>
+		<a href="http://localhost:8000/exweb/login.do?id=a001&pw=1234">로그인 성공</a>
+		<a href="login.do?id=a001&pw=7894">로그인 실패</a>
+	</div>
+</body>
+</html>
