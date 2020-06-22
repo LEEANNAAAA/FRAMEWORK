@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--   현재 Mapper 파일(SQL문들의 집합)의 고유한 이름을 namespace 속성에 지정 -->
+<!-- 일반적으로 여기 등록된 SQL문들을 실행할 인터페이스의 이름과 동일하게 설정  -->
+<mapper namespace="kr.ac.kopo.member.MemberDao">
+<!-- 	실행할 SQL문과 동일한 이름의 엘리먼트를 사용하여 SQL문을 등록 -->
+<!-- 	SQL문의 고유한 이름을 id속성에 지정 -->
+<!-- 	보통 SQL문을 실행할 때 사용할 인터페이스의 메서드 이름과 동일하게 설정 -->
+<!-- 실행결과 레코드 1개를 담을 자바객체의 클래스명을 resultType 속성에 지정 -->
+  <select id="selectMemberList" resultType="kr.ac.kopo.member.MemberVo">
+  	SELECT mem_id as memId, mem_pass as memPass, mem_name as memName, mem_point as memPoint
+  	 From member
+  </select>
+  
+<!--   실행헤 필요한 값을 받는 경우에는, 받을 값을 타입을 parameterType 속성에 지정 / java.lang.String으로 써야하는걸 string으로 축약 -->
+  <select id="selectMember" parameterType="string" resultType="kr.ac.kopo.member.MemberVo">
+  	SELECT mem_id as memId, mem_pass as memPass, mem_name as memName, mem_point as memPoint
+  	FROM member 
+  	WHERE mem_id = #{memId}
+  </select>
+  
+<!--   파라미터로 받은 객체의 속성(변수)값을 SQL문에 주입하기 위해서 #{변수명} 을 사용 -->
+  <insert id="insertMember" parameterType="kr.ac.kopo.member.MemberVo" >
+  	INSERT INTO member 
+  	(mem_id, mem_pass, mem_name, mem_point)
+	VALUES (#{memId},#{memPass},#{memName},#{memPoint})
+  </insert>
+  
+  <update id="updateMember" parameterType="kr.ac.kopo.member.MemberVo">
+  	UPDATE member 
+  	SET  mem_name=#{memName}, mem_point=#{memPoint}) 
+  	WHERE mem_id=#{memId}
+  </update>
+  
+<!--   parameterType 이 단일값을 갖는 객체인 경우 (String, Integer,..)에는 #{}의 이름은 무엇을 사용하든 상관없음 -->
+  <delete id="deleteMember" parameterType="string">
+  	DELETE FROM member 
+  	WHERE mem_id=#{memId}
+  </delete>
+  
+  <select id="selectLoginMember" parameterType="kr.ac.kopo.member.MemberVo" resultType="kr.ac.kopo.member.MemberVo">
+<!--   resultType는 select 일때 값을 담아서 줘야하니까 필요하다 나머지에는.. 안필요..? -->
+  	SELECT mem_id as memId, mem_pass as memPass, mem_name as memName, mem_point as memPoint
+  	FROM member 
+  	WHERE mem_id = #{memId} and mem_pass=#{memPass}
+  </select>
+  
+  
+</mapper>
