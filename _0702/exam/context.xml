@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+ 	<!-- 빈(bean) : 본래는 Java Beans 라는 규약(규칙)을 지켜서 만든 객체를 의미 -->
+	<!-- 최근에는 아래 2가지 정도의 조건만 만족하면 Bean 이라고 부르며, 사실상 인스턴스(객체)와 동일한 단어처럼 사용되고 있다. -->
+	<!-- -> 인자없는 생성자가 존재하고, 속성(멤버변수, 필드)에 대한 getter/setter 메서드가 존재 -->
+	
+	<!-- com.exam.MyApp 클래스의 객체(인스턴스)를 생성(new)하여 ma라는 이름으로 스프링에 등록 -->
+	<!-- 	<bean id="ma" class="com.exam.MyApp"> -->
+		<!-- MyApp 객체의 myService 변수(속성)에, 스프링에 msen이라는 이름으로 등록된 객체를 주입(저장) -->
+<!-- 		<property name="myService" ref="msko"></property> -->
+<!-- 	</bean>	 -->
+	<!-- com.exam.MyServiceEn 클래스의 객체(인스턴스)를 생성(new)하여 msen라는 이름으로 스프링에 등록 -->
+<!-- 	<bean id="msen" class="com.exam.MyServiceEn"></bean> -->
+	<!-- com.exam.MyServiceEn 클래스의 객체(인스턴스)를 생성(new)하여 msko라는 이름으로 스프링에 등록 -->
+<!-- 	<bean id="msko" class="com.exam.MyServiceKo"></bean> -->
+
+	<!-- com.exam 패키지(폴더) 아래에 있는 클래스들 중  -->
+	<!-- @Component 가 붙은 클래스들의 객체를 생성하여 스프링에 등록  -->
+	<!-- @Component 대신 객체의 역할에 따라서 @Component(servlet역할), @Service(service역할), @Repository(dao역할) 등 사용 가능  -->
+	<context:component-scan base-package="com.exam"></context:component-scan>
+	
+	</beans>
