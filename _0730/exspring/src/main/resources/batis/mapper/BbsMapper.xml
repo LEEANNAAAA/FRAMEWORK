@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 현재 Mapper 파일(SQL문들의 집합)의 고유한 이름을 namespace 속성에 지정 -->
+<!-- 일반적으로 여기 등록된 SQL문들을 실행할 인터페이스의 이름과 동일하게 설정, BbsDao.java -->
+<mapper namespace="kr.ac.kopo.bbs.BbsDao">
+
+	<resultMap type="BbsVo" id="bbsMap">
+		<result property="bbsNo" column="bbs_no" />
+		<result property="bbsTitle" column="bbs_title" />
+		<result property="bbsContent" column="bbs_content" />
+		<result property="bbsWriter" column="bbs_writer" />
+		<result property="bbsRegDate" column="bbs_reg_date" />
+		<result property="bbsCount" column="bbs_count" />
+		<collection property="attachList" ofType="AttachVo">
+			<result property="attNo" column="att_no" />
+			<result property="attOrgName" column="att_org_name" />
+			<result property="attNewName" column="att_new_name" />
+			<result property="attBbsNo" column="att_bbs_no" />
+		</collection>
+	</resultMap>
+
+	<!-- 실행할 SQL문과 동일한 이름의 엘리먼트를 사용하여 SQL문을 등록 -->
+	<!-- SQL문의 고유한 이름을 id속성에 지정 -->
+	<!-- 보통 SQL문을 실행할 때 사용할 인터페이스의 메서드 이름과 동일하게 설정 -->
+	<!-- 실행결과 레코드 1개를 담을 자바객체의 클래스명을 resultType 속성에 지정 -->
+	<select id="selectBbsList" resultType="BbsVo">
+		SELECT bbs_no, bbs_title,
+		bbs_writer, bbs_reg_date, bbs_count
+		From bbs
+	</select>
+
+	<!-- 실행헤 필요한 값을 받는 경우에는, 받을 값을 타입을 parameterType 속성에 지정 / java.lang.String으로 
+		써야하는걸 string으로 축약 -->
+	<select id="selectBbs" parameterType="int" resultMap="bbsMap">
+		SELECT
+		bbs_no, bbs_title, bbs_content,bbs_writer, bbs_reg_date, bbs_count,
+		att_no,att_org_name, att_new_name, att_bbs_no
+		FROM bbs left outer join
+		attach on bbs_no = att_bbs_no
+		WHERE bbs_no = #{bbsNo}
+	</select>
+
+	<!-- 파라미터로 받은 객체의 속성(변수)값을 SQL문에 주입하기 위해서 #{변수명} 을 사용 -->
+	<insert id="insertBbs" parameterType="BbsVo">
+		<!-- insert문을 수행하기 전에 selectKey의 SQL문을 실행하고, -->
+		<!-- 결과로 나오는 INT 값을 파라미터 객체(BbsVo)의 bbsNo 속성(변수)에 저장 -->
+		<selectKey keyProperty="bbsNo" resultType="int"
+			order="BEFORE">
+			select seq_bbs_no.NEXTVAL from dual
+		</selectKey>
+		INSERT INTO bbs (bbs_no, bbs_title, bbs_content, bbs_writer)
+		VALUES
+		(${bbsNo},#{bbsTitle},#{bbsContent},#{bbsWriter})
+	</insert>
+
+	<update id="updateBbs" parameterType="BbsVo">
+		UPDATE bbs
+		SET
+		bbs_title=#{bbsTitle}, bbs_content=#{bbsContent}
+		WHERE bbs_no=#{bbsNo}
+
+	</update>
+
+	<!-- parameterType 이 단일값을 갖는 객체인 경우 (String, Integer,..)에는 #{}의 이름은 무엇을 
+		사용하든 상관없음 -->
+	<delete id="deleteBbs" parameterType="int">
+		DELETE FROM bbs
+		WHERE
+		bbs_no=#{bbsNo}
+	</delete>
+
+
+</mapper>

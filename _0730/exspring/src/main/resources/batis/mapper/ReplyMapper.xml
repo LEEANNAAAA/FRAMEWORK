@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 현재 Mapper 파일(SQL문들의 집합)의 고유한 이름을 namespace 속성에 지정 -->
+<!-- 일반적으로 여기 등록된 SQL문들을 실행할 인터페이스의 이름과 동일하게 설정, BbsDao.java -->
+<mapper namespace="kr.ac.kopo.reply.ReplyDao">
+
+	<select id="selectList" parameterType="int" resultType="ReplyVo">
+		SELECT rep_no, rep_content, rep_writer, rep_date, rep_bbs_no
+		From reply
+		where rep_bbs_no = #{repBbsNo}
+		order by rep_date desc
+	</select>
+
+	<insert id="insert" parameterType="ReplyVo">
+		INSERT INTO reply (rep_no, rep_content, rep_writer, rep_bbs_no)
+		VALUES
+		(seq_rep_no.nextval,#{repContent},#{repWriter},#{repBbsNo})
+	</insert>
+
+</mapper>
