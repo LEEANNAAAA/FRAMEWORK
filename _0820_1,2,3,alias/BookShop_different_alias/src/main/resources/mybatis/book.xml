@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="book3">
+
+	<sql id="search">
+		SELECT * FROM BOOK
+	</sql>
+
+	<select id="total3" resultType="Integer">
+		select count(*) from
+			(<include refid="search"></include>)
+	</select>
+
+	<select id="list" resultType="Book3">
+		SELECT * FROM book
+	</select>
+	
+	<insert id="add3">
+		INSERT INTO book
+		VALUES (#{bookid}, #{bookname}, #{publisher}, #{price})
+	</insert>
+	
+	<delete id="delete3">
+		DELETE FROM book
+		WHERE bookid=#{bookid}
+	</delete>
+	
+	<update id="update3">
+		UPDATE book
+		SET bookname=#{bookname}, publisher=#{publisher}, price=#{price}
+		WHERE bookid=#{bookid}
+	</update>
+	
+	<select id="item3" resultType="Book3">
+		SELECT * FROM book
+		WHERE bookid=#{bookid}
+	</select>
+</mapper>
